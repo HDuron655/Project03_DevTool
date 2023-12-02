@@ -5,6 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
 {
+    #region "this is for the headers and stuff
     [Header("General Stats")]
     [SerializeField][Range(3, 100)]
     private float _moveSpeed = 5;
@@ -13,33 +14,41 @@ public class PlayerController : MonoBehaviour
 
     //maybe add a gravity slider for how quick player falls?
 
-
     [Header("Abilities")]
     [SerializeField]
     private bool _canJump = true;
     [SerializeField]
-    private bool _canDoubleJump;
-
+    public int _maxJumpCount = 2;
+    public int _remainingJumps = 0;
 
     [Header("Misc")]
     [SerializeField][Tooltip("Makes the number of collectables in the scene" +
         " visable in score UI")]
     private bool _collectableCountVisable;
+    #endregion
 
     Rigidbody _rb = null;
 
-    private bool playerIsOnGround = true;
+    JumpPowerUp _powerJumpz;
+
+    private int _origMaxJump;
+
+    //private bool playerIsOnGround = true;
 
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
+
+        _powerJumpz = gameObject.GetComponent<JumpPowerUp>();
+
+        _origMaxJump = _maxJumpCount;
     }
 
     private void Update()
     {
         MovePlayer();
         PlayerJump();
-        Debug.Log(playerIsOnGround);
+        Debug.Log(_remainingJumps);
     }
 
     void MovePlayer()
@@ -65,38 +74,46 @@ public class PlayerController : MonoBehaviour
     {
         if (this._canJump == true)
         {
-            if (Input.GetButtonDown("Jump") && playerIsOnGround)
-            {
-                _rb.AddForce(new Vector3(0, _jumpHeight, 0), ForceMode.Impulse);
-                playerIsOnGround = false;
-            }
+            if (Input.GetButtonDown("Jump"))
+                if (_remainingJumps > 0)
+                {
+                    {
+                        _rb.AddForce(new Vector3(0, _jumpHeight, 0), ForceMode.Impulse);
+                        //playerIsOnGround = false;
+                        _remainingJumps--;
 
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-            playerIsOnGround = true;
-            }
-            /*make this possible by making playerisonground statement true when
-             the player is on ground, maybe tags and other stuff? but also 
-            incorporate the double jump method by adding more to the first 
-            if statement about "JUMP" etc.
-             */
-            
-
-
-
-        /*
-        if (this.transform.position.y < _jumpHeight)
-        {
-            float jumpAmountThisFrame = Input.GetAxis("Jump") * _jumpHeight;
-            Vector3 Jumping = transform.up * jumpAmountThisFrame;
-            _rb.AddForce(Jumping);
-        }
-        */
+                        if (_maxJumpCount > _origMaxJump && _remainingJumps ==0)
+                        {
+                            _maxJumpCount = _origMaxJump;
+                        }
+                    }
+                }
         }
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Ground")
+        {
+            //playerIsOnGround = true;
+            _remainingJumps = _maxJumpCount;
+        }
+    }
+
+    //READ!!!!
+    //12-1-23  The jump power thing is done, all i need to do is
+    // incorporate the other power ups, being an increase in speed,
+    // and collectables; I also need to incorporate a UI for how many jumps
+    // are left, collectables collected, and maybe a meter for the speed?
+    // but the last one is not as important
+
+    
+    //TODO after all of that is done, make sure to make a little playtest room
+    // so that i can showcase what i did for the video
 
 
+
+    //OLD
     // also make the inventory system to 
     // keep score updated with each collectable
     // and how many there are in the game
