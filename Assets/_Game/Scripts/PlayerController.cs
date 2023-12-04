@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
     #region "this is for the headers and stuff
     [Header("General Stats")]
     [SerializeField][Range(3, 100)]
-    private float _moveSpeed = 5;
+    public float _moveSpeed = 5;
     [SerializeField][Range(2, 50)]
     private float _jumpHeight = 5;
 
@@ -17,7 +17,7 @@ public class PlayerController : MonoBehaviour
     [Header("Abilities")]
     [SerializeField]
     private bool _canJump = true;
-    [SerializeField]
+    [SerializeField][Min(1)]
     public int _maxJumpCount = 2;
     public int _remainingJumps = 0;
 
@@ -35,6 +35,11 @@ public class PlayerController : MonoBehaviour
 
     //private bool playerIsOnGround = true;
 
+    //Character controller movment
+    private CharacterController _characterController;
+
+    private Vector3 _direction;
+
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
@@ -42,13 +47,15 @@ public class PlayerController : MonoBehaviour
         _powerJumpz = gameObject.GetComponent<JumpPowerUp>();
 
         _origMaxJump = _maxJumpCount;
+
+        //_characterController = GetComponent<CharacterController>();
     }
 
     private void Update()
     {
         MovePlayer();
         PlayerJump();
-        Debug.Log(_remainingJumps);
+        //Debug.Log(Time.deltaTime);
     }
 
     void MovePlayer()
@@ -101,17 +108,19 @@ public class PlayerController : MonoBehaviour
     }
 
     //READ!!!!
-    //12-1-23  The jump power thing is done, all i need to do is
-    // incorporate the other power ups, being an increase in speed,
-    // and collectables; I also need to incorporate a UI for how many jumps
-    // are left, collectables collected, and maybe a meter for the speed?
-    // but the last one is not as important
-
+    /* 12/3/23
+     * make the powerups spin or something, make them intesting
+     * make the camera follow the player like in marble madness
+     * make the playtesting room showcasing the abliities
+     * add a UI for stored Jumps
+     * make collectables for player with a score UI
+     * make an indicator for how long the speed boost will last
+     * maybe implement an optional first person camera?
+     * IN THE FUTURE add particles and a sfx when collecting the powers
+    */
     
     //TODO after all of that is done, make sure to make a little playtest room
     // so that i can showcase what i did for the video
-
-
 
     //OLD
     // also make the inventory system to 
