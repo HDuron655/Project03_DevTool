@@ -55,7 +55,7 @@ public class PlayerController : MonoBehaviour
     {
         MovePlayer();
         PlayerJump();
-        //Debug.Log(Time.deltaTime);
+        Debug.Log(_remainingJumps);
     }
 
     void MovePlayer()
@@ -89,7 +89,7 @@ public class PlayerController : MonoBehaviour
                         //playerIsOnGround = false;
                         _remainingJumps--;
 
-                        if (_maxJumpCount > _origMaxJump && _remainingJumps ==0)
+                        if (_maxJumpCount > _origMaxJump && _remainingJumps == 0)
                         {
                             _maxJumpCount = _origMaxJump;
                         }

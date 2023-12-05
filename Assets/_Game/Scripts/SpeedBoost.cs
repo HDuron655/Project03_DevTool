@@ -17,12 +17,18 @@ public class SpeedBoost : MonoBehaviour
 
     private Collider _collider;
 
+    public float rotateSpeed = 0.5f;
+
     private void Awake()
     {
         _collider = GetComponent<Collider>();
     }
 
-    // Update is called once per frame
+    private void Update()
+    {
+        transform.Rotate(0, rotateSpeed, 0, Space.World);
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         PlayerController player = other.gameObject.GetComponent<PlayerController>();
@@ -41,10 +47,13 @@ public class SpeedBoost : MonoBehaviour
         //soft disable
         _artToDisable.SetActive(false);
         _collider.enabled = false;
+
         player._moveSpeed = player._moveSpeed += _buffedSpeed;
 
         yield return new WaitForSeconds(duration);
         
         player._moveSpeed = player._moveSpeed -= _buffedSpeed;
+
+        Destroy(this);
     }
 }

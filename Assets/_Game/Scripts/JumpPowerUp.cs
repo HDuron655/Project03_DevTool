@@ -4,14 +4,18 @@ using UnityEngine;
 
 public class JumpPowerUp : MonoBehaviour
 {
-    //I think i am finished with this, the workings are fine so far
-    // the only thing i can change is how to make the collectable spin
-    // or something but other than that it is good 
-
+    
     [Header("Double Jump Powerup")]
     [SerializeField]
     [Range(1, 5)]
     private int _poweredJumps = 1;
+
+    public float rotateSpeed = 0.5f;
+
+    private void Update()
+    {
+        transform.Rotate(0, rotateSpeed, 0, Space.World);
+    }
 
     private void OnTriggerEnter(Collider other)
     {
