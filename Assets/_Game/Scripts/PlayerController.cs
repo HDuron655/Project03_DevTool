@@ -17,7 +17,8 @@ public class PlayerController : MonoBehaviour
     [Header("Abilities")]
     [SerializeField]
     private bool _canJump = true;
-    [SerializeField][Min(1)]
+    [SerializeField][Min(1)][Tooltip("Setting to a number greater than 1 means " +
+        "that the player has that many number of jumps; setting to 1 means it will be a normal jump")]
     public int _maxJumpCount = 2;
     public int _remainingJumps = 0;
 
@@ -35,11 +36,6 @@ public class PlayerController : MonoBehaviour
 
     //private bool playerIsOnGround = true;
 
-    //Character controller movment
-    private CharacterController _characterController;
-
-    private Vector3 _direction;
-
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
@@ -55,7 +51,7 @@ public class PlayerController : MonoBehaviour
     {
         MovePlayer();
         PlayerJump();
-        Debug.Log(_remainingJumps);
+        //Debug.Log(_remainingJumps);
     }
 
     void MovePlayer()
@@ -109,11 +105,6 @@ public class PlayerController : MonoBehaviour
 
     //READ!!!!
     /* 12/3/23
-     * make the powerups spin or something, make them intesting
-     * make the camera follow the player like in marble madness
-     * make the playtesting room showcasing the abliities
-     * add a UI for stored Jumps
-     * make collectables for player with a score UI
      * make an indicator for how long the speed boost will last
      * maybe implement an optional first person camera?
      * IN THE FUTURE add particles and a sfx when collecting the powers
@@ -123,11 +114,6 @@ public class PlayerController : MonoBehaviour
     // so that i can showcase what i did for the video
 
     //OLD
-    // also make the inventory system to 
     // keep score updated with each collectable
     // and how many there are in the game
-
-    // make it possible to bind
-    // other keys into movement through
-    // inspector
 }

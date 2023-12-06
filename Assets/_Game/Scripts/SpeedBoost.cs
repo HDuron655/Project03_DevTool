@@ -17,6 +17,7 @@ public class SpeedBoost : MonoBehaviour
 
     private Collider _collider;
 
+    [Tooltip("This is for how fast the object will rotate in the game")]
     public float rotateSpeed = 0.5f;
 
     private void Awake()
@@ -26,7 +27,7 @@ public class SpeedBoost : MonoBehaviour
 
     private void Update()
     {
-        transform.Rotate(0, rotateSpeed, 0, Space.World);
+        transform.Rotate(0, -rotateSpeed, 0, Space.World);
     }
 
     private void OnTriggerEnter(Collider other)
