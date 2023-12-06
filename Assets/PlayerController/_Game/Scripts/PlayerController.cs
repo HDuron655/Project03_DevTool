@@ -19,11 +19,6 @@ public class PlayerController : MonoBehaviour
         "that the player has that many number of jumps; setting to 1 means it will be a normal jump")]
     public int _maxJumpCount = 2;
     public int _remainingJumps = 0;
-
-    [Header("Misc")]
-    [SerializeField][Tooltip("Makes the number of collectables in the scene" +
-        " visable in score UI")]
-    private bool _collectableCountVisable;
     #endregion
 
     Rigidbody _rb = null;
